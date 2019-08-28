@@ -160,7 +160,9 @@ public class MemberDAO {
 		// TODO Auto-generated method stub
 		
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		ResultSet rs = null;
+		ResultSet rs2 = null;
 		String memlist_sql = "select * from member order by id asc limit ?,10";
 		ArrayList<Member> memlist = new ArrayList<Member>();
 		Member member = null;
@@ -175,6 +177,13 @@ public class MemberDAO {
 				member = new Member();
 				member.setId(rs.getString("id"));
 				member.setJoin_date(rs.getDate("join_date"));
+
+				pstmt2 = con.prepareStatement("select sum(pay) from pro_order where user_id=? and order_state='complete'");
+				pstmt2.setString(1, rs.getString("id"));
+				rs2=pstmt2.executeQuery();
+				while(rs2.next()) {
+					member.setPaysum(rs2.getInt("sum(pay)"));
+				}
 				memlist.add(member);
 			}
 		}catch(Exception e) {

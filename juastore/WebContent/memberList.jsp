@@ -100,7 +100,7 @@
 			<tr>
 				<td>${list.id }</td>
 				<td>${list.join_date }</td>
-				<td>39,000</td>
+				<td>${list.paysum }</td>
 				<td><input type="button" value="조회"></td>
 			</tr>
 			</c:forEach>

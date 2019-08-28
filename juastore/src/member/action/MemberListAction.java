@@ -45,11 +45,6 @@ public class MemberListAction implements Action {
 		ActionForward forward = new ActionForward();
 		forward.setPath("memberList.jsp");
 		
-		if(request.getParameter("search")=="id") {
-			
-		}
-		
-		
 		return forward;
 	}
 
