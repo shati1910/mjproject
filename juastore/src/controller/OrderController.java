@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
+import order.action.OrderDetailAction;
 import order.action.OrderListAction;
 import vo.ActionForward;
 
@@ -60,6 +61,13 @@ public class OrderController extends HttpServlet {
     	
     	if(command.equals("/myOrderList.ord")) {
     		action = new OrderListAction();
+    		try {
+    			forward=action.execute(request, response);
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}else if(command.equals("/orderDetail.ord")) {
+    		action = new OrderDetailAction();
     		try {
     			forward=action.execute(request, response);
     		}catch(Exception e) {
