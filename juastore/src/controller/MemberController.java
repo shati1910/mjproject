@@ -146,8 +146,6 @@ public class MemberController extends HttpServlet {
     		}catch(Exception e) {
     			e.printStackTrace();
     		}
-<<<<<<< Updated upstream
-=======
     	}else if(command.equals("/findId.mem")) {
     		action = new FindIdAction();
     		try {
@@ -162,7 +160,6 @@ public class MemberController extends HttpServlet {
     		}catch(Exception e) {
     			e.printStackTrace();
     		}
->>>>>>> Stashed changes
     	}
     	
     	
