@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
 import member.action.AddrChangeAction;
+import member.action.FindIdAction;
+import member.action.FindPassAction;
 import member.action.LoginAction;
 import member.action.LogoutAction;
 import member.action.MemberIdCheckAction;
@@ -63,6 +65,10 @@ public class MemberController extends HttpServlet {
 	    	
 	   	ActionForward forward=null;
 	   	Action action = null;
+	   	
+	   	System.out.println(RequestURI);
+    	System.out.println(contextPath);
+    	System.out.println(command);
 
     	if(command.equals("/joinForm.mem")) {
     		forward=new ActionForward();
@@ -140,6 +146,23 @@ public class MemberController extends HttpServlet {
     		}catch(Exception e) {
     			e.printStackTrace();
     		}
+<<<<<<< Updated upstream
+=======
+    	}else if(command.equals("/findId.mem")) {
+    		action = new FindIdAction();
+    		try {
+    			forward = action.execute(request, response);
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}else if(command.equals("/findPass.mem")) {
+    		action = new FindPassAction();
+    		try {
+    			forward = action.execute(request, response);
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+>>>>>>> Stashed changes
     	}
     	
     	
