@@ -41,12 +41,8 @@ public class MemberJoinProAction implements Action{
 			out.println("</script>");
 			
 		}else{
-			response.setContentType("text/html;charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>");
-			out.println("alert('회원가입이 완료되었습니다.')");
-			out.println("location.href='loginForm.mem'");
-			out.println("</script>");
+			forward = new ActionForward();
+			forward.setPath("joinProcess.jsp");
 		}
 		
 		return forward;

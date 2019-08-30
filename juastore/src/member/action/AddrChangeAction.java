@@ -39,12 +39,8 @@ public class AddrChangeAction implements Action {
 				out.println("history.back()");
 				out.println("</script>");
 			}else {
-				response.setContentType("text/html;charset=UTF-8");
-				PrintWriter out = response.getWriter();
-				out.println("<script>");
-				out.println("alert('주소 변경이 완료되었습니다.')");
-				out.println("location.href='modify.mem'");
-				out.println("</script>");
+				forward = new ActionForward();
+				forward.setPath("addrChangePro.jsp");
 			}
 		}else {
 			response.setContentType("text/html;charset=UTF-8");
