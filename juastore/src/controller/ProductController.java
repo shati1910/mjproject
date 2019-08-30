@@ -10,22 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
-import order.action.CancelMyOrderAction;
-import order.action.OrderDetailAction;
-import order.action.OrderListAction;
+import product.action.ProductListAction;
 import vo.ActionForward;
 
 /**
- * Servlet implementation class OrderController
+ * Servlet implementation class ProductController
  */
-@WebServlet("*.ord")
-public class OrderController extends HttpServlet {
+@WebServlet("*.pro")
+public class ProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public OrderController() {
+    public ProductController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -60,22 +58,8 @@ public class OrderController extends HttpServlet {
     	System.out.println(contextPath);
     	System.out.println(command);
     	
-    	if(command.equals("/myOrderList.ord")) {
-    		action = new OrderListAction();
-    		try {
-    			forward=action.execute(request, response);
-    		}catch(Exception e) {
-    			e.printStackTrace();
-    		}
-    	}else if(command.equals("/orderDetail.ord")) {
-    		action = new OrderDetailAction();
-    		try {
-    			forward=action.execute(request, response);
-    		}catch(Exception e) {
-    			e.printStackTrace();
-    		}
-    	}else if(command.equals("/cancelMyOrder.ord")) {
-    		action = new CancelMyOrderAction();
+    	if(command.equals("/productList.pro")) {
+    		action = new ProductListAction();
     		try {
     			forward=action.execute(request, response);
     		}catch(Exception e) {

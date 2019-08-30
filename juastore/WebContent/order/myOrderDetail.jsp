@@ -72,7 +72,12 @@ th, td {
 				<td>${order.address }</td>
 			</tr>
 		</table>
-		<br> <a href="/juastore/myOrderList.ord">주문목록으로</a>
+		<br>
+		<c:if test="${order.order_state eq '주문완료' || order.order_state eq '결제완료'}">
+			<a href="/juastore/cancelMyOrder.ord?order_num=${order.order_num }">주문 취소</a>
+		</c:if>
+		<br> 
+		<a href="/juastore/myOrderList.ord">주문목록으로</a>
 	</div>
 	<jsp:include page="/side.jsp" />
 	<jsp:include page="/bottom.jsp" />

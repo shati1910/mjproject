@@ -23,15 +23,45 @@ public class OrderDAO {
 		// TODO Auto-generated method stub
 		this.con=con;
 	}
-	public ArrayList<Pro_order> selectOrderList(String id) {
+	
+	//주문수
+	public int selectOrderListCount() {
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		String sql="select * from pro_order where user_id=?";
+		String sql="select count(*) from pro_order";
+		int listCount=0;
+		try {
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				listCount=rs.getInt(1);
+			}
+		}catch(Exception e) {
+			System.out.println("selectOrderListCount 에러 : " +e);
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return listCount;
+	}
+	//주문목록
+	public ArrayList<Pro_order> selectOrderList(String id, int page, int limit) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select * from pro_order where user_id=? order by order_num limit ?,?";
+		int startrow = (page-1) *limit;
+		
 		ArrayList<Pro_order> orderList=null;
+		
 		try {
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, id);
+			pstmt.setInt(2, startrow);
+			pstmt.setInt(3, limit);
+			
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {
@@ -56,6 +86,7 @@ public class OrderDAO {
 		
 		return orderList;
 	}
+	//주문한 상품목록
 	public ArrayList<OrderView> selectItemList(int order_num) {
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt=null;
@@ -86,6 +117,7 @@ public class OrderDAO {
 		}
 		return itemList;
 	}
+	//주문 상세
 	public Pro_order selectOrder(int order_num) {
 		// TODO Auto-generated method stub
 		Pro_order order = null;
@@ -117,6 +149,47 @@ public class OrderDAO {
 		}
 		
 		return order;
+	}
+	//주문자 확인
+	public boolean selectIsMyOrder(int order_num, String user_id) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select * from pro_order where order_num=? and user_id=?";
+		boolean isMyOrder=false;
+		
+		try {
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, order_num);
+			pstmt.setString(2,user_id);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				isMyOrder=true;
+			}
+		}catch(Exception e) {
+			System.out.println("selectIsMyOrder에러 : "+e);
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return isMyOrder;
+	}
+	public int cancelMyOrder(int order_num) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt=null;
+		String sql="update pro_order set order_state='주문취소' where order_num=?";
+		int isCancel=0;
+		try {
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, order_num);
+			isCancel=pstmt.executeUpdate();
+		}catch(Exception e) {
+			System.out.println("cancelMyOrder에러 : " +e);
+		}finally {
+			close(pstmt);
+		}
+		return isCancel;
 	}
 	
 	
