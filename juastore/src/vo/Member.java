@@ -11,6 +11,7 @@ public class Member {
 	private String address;
 	private String phone;
 	private Date join_date;
+	private int paysum;
 	
 	public String getId() {
 		return id;
@@ -59,6 +60,12 @@ public class Member {
 	}
 	public void setJoin_date(Date join_date) {
 		this.join_date = join_date;
+	}
+	public int getPaysum() {
+		return paysum;
+	}
+	public void setPaysum(int paysum) {
+		this.paysum = paysum;
 	}
 	
 	

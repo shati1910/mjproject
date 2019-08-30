@@ -20,14 +20,14 @@ public class MemberListService {
 		return listCount;
 	}
 
-	public ArrayList<Member> getmemList(int page, int limit) {
+	public ArrayList<Member> getmemList(int page, int limit, String search) {
 		// TODO Auto-generated method stub
 
 		ArrayList<Member> memlist = null;
 		Connection con = getConnection();
 		MemberDAO memberDAO = MemberDAO.getInstance();
 		memberDAO.setConnection(con);
-		memlist = memberDAO.SelectMemList(page,limit);
+		memlist = memberDAO.SelectMemList(page,limit,search);
 		close(con);
 		return memlist;
 	}

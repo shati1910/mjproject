@@ -1,9 +1,11 @@
 package member.action;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import action.Action;
 import member.svc.MemberListService;
@@ -17,6 +19,8 @@ public class MemberListAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
 		ArrayList<Member> memlist = new ArrayList<Member>();
 		int page=1;
 		int limit=10;
@@ -24,10 +28,20 @@ public class MemberListAction implements Action {
 		if(request.getParameter("page")!=null) {
 			page=Integer.parseInt(request.getParameter("page"));
 		}
+		System.out.println(session.getAttribute("id"));
+		if(session.getAttribute("id")==null || !((String)session.getAttribute("id")).equals("admin")) {
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('관리자로 로그인 하세요')");
+			out.println("location.href='loginForm.mem'");
+			out.println("</script>");
+		}
+		String search = request.getParameter("search");
 		
 		MemberListService memberListSVC = new MemberListService();
 		int listCount = memberListSVC.getListCount();
-		memlist = memberListSVC.getmemList(page,limit);
+		memlist = memberListSVC.getmemList(page,limit,search);
 		int maxPage = (int)((double)listCount/limit+0.95);
 		int startPage = (((int)((double)page/10+0.9))-1)*10+1;
 		int endPage = startPage+10-1;
@@ -42,12 +56,9 @@ public class MemberListAction implements Action {
 		pageInfo.setStartPage(startPage);
 		request.setAttribute("pageInfo", pageInfo);
 		request.setAttribute("memlist", memlist);
+		request.setAttribute("search", search);
 		ActionForward forward = new ActionForward();
 		forward.setPath("memberList.jsp");
-		
-		if(request.getParameter("search")=="id") {
-			
-		}
 		
 		
 		return forward;

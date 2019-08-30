@@ -17,6 +17,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<%if(session.getAttribute("id")==null || !((String)session.getAttribute("id")).equals("admin")) {%>
+<script>
+	alert('관리자로 로그인 하세요')
+	location.href='loginForm.mem';
+</script>
+<%} %>
 <style>
 .memlist {
 	margin: auto;
@@ -66,10 +72,11 @@
 </style>
 </head>
 <body>
-<form action="memberList.mem" name="memberlist">
+
 	<div class="total">
 		
 		<div class="optionBox">
+<form action="memberList.mem" name="memberlist">
 		<h1>회원 관리</h1>
 			<div class="Alignment">
 				<select id="search" name="search">
@@ -77,14 +84,16 @@
 					<option value="joinlist">가입일순</option>
 					<option value="paylist">구매금액순</option>
 				</select>
-				<input type="submit" value="정렬">
+				<input type="submit" value="정렬" name="memberlist">
 			</div>
+</form>
 			<div class="searchBox">
 				<input type="text" id="findId" name="findId"> <input
 					type="button" value="검색">
 			</div>
 		</div>
 		<br><br>
+	
 		<table class="memlist">
 		<c:choose>
 			<c:when test="${listCount>0 }">
@@ -93,16 +102,20 @@
 					<td>id</td>
 					<td>가입일</td>
 					<td>구매금액</td>
+					<td></td>
 					<td>조회</td>
 				</tr>
 			</thead>
 			<c:forEach var="list" items="${memlist }">
+			<form action="memInfo.mem" name="memInfo">	
 			<tr>
 				<td>${list.id }</td>
 				<td>${list.join_date }</td>
-				<td>39,000</td>
-				<td><input type="button" value="조회"></td>
+				<td>${list.paysum }</td>
+				<td><input type="hidden" value="${list.id }" name="user_id" id="user_id"></td>
+				<td><input type="submit" value="조회"></td>
 			</tr>
+			</form>	
 			</c:forEach>
 			</c:when>
 			<c:otherwise>
@@ -110,6 +123,7 @@
 			</c:otherwise>
 		</c:choose>
 		</table>
+	
 	</div>
 	<section id="pageList">
 	<p>
@@ -140,7 +154,6 @@
 			</c:otherwise>
 		</c:choose>
 	</section>
-</form>
 <jsp:include page="bottom.jsp"/>
 </body>
 </html>

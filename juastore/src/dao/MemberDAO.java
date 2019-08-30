@@ -62,7 +62,10 @@ public class MemberDAO {
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
+		PreparedStatement pstmt2 = null;
+		ResultSet rs2 = null;
 		String sql="select * from member where id=?";
+		String sql2 = "select * from memlist where id=?";
 		Member loginMember=null;
 		
 		try {
@@ -79,12 +82,21 @@ public class MemberDAO {
 				loginMember.setZip_code(rs.getInt("zip_code"));
 				loginMember.setAddress(rs.getString("address"));
 				loginMember.setPhone(rs.getString("phone"));
+				
+				pstmt2 = con.prepareStatement(sql2);
+				pstmt2.setString(1, rs.getString("id"));
+				rs2 = pstmt2.executeQuery();
+				if(rs2.next()) {
+					loginMember.setPaysum(rs2.getInt("accumpay"));
+				}
 			}
 		}catch(SQLException e) {
 			System.out.println("SelectMember 오류 : " + e);
 		}finally {
 			close(rs);
 			close(pstmt);
+			close(rs2);
+			close(pstmt2);
 		}
 		
 		return loginMember;
@@ -156,25 +168,41 @@ public class MemberDAO {
 		return listCount;
 	}
 
-	public ArrayList<Member> SelectMemList(int page, int limit) {
+	public ArrayList<Member> SelectMemList(int page, int limit, String search) {
 		// TODO Auto-generated method stub
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String memlist_sql = "select * from member order by id asc limit ?,10";
+		PreparedStatement pstmt2 = null;
+		ResultSet rs2 = null;
+
+		String memlist_sql ="select * from member order by id limit ?,10";
+		System.out.println("search값 테스트"+search);
 		ArrayList<Member> memlist = new ArrayList<Member>();
 		Member member = null;
 		int startrow=(page-1)*10;
 		
 		try {
+	
 			pstmt = con.prepareStatement(memlist_sql);
 			pstmt.setInt(1, startrow);
 			rs=pstmt.executeQuery();
 			
+
 			while(rs.next()) {
 				member = new Member();
 				member.setId(rs.getString("id"));
 				member.setJoin_date(rs.getDate("join_date"));
+				
+				pstmt2 = con.prepareStatement("select member.id,member.join_date,accumpay from member "
+						+ "left join memlist on member.id = memlist.id where member.id=?;");
+				
+				pstmt2.setString(1, rs.getString("id"));
+				rs2 = pstmt2.executeQuery();
+				while(rs2.next()) {
+				member.setPaysum(rs2.getInt("accumpay"));
+				}
+				
 				memlist.add(member);
 			}
 		}catch(Exception e) {
@@ -182,6 +210,8 @@ public class MemberDAO {
 		}finally {
 			close(rs);
 			close(pstmt);
+			close(rs2);
+			close(pstmt2);
 		}
 		return memlist;
 	}

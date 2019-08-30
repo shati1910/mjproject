@@ -98,13 +98,6 @@ public class MemberController extends HttpServlet {
     		}catch(Exception e){
     			e.printStackTrace();
     		}
-    	}else if(command.equals("/memberInfo.mem")) {
-    		action = new MemberInfoAction();
-    		try {
-    			forward=action.execute(request, response);
-    		}catch(Exception e) {
-    			e.printStackTrace();
-    		}
     	}else if(command.equals("/modify.mem")) {
     		action = new MemberModFormAction();
     		try {
@@ -135,6 +128,13 @@ public class MemberController extends HttpServlet {
     		}
     	}else if(command.equals("/addrChange.mem")) {
     		action = new AddrChangeAction();
+    		try {
+    			forward = action.execute(request, response);
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}else if(command.equals("/memInfo.mem")) {
+    		action = new MemberInfoAction();
     		try {
     			forward = action.execute(request, response);
     		}catch(Exception e) {
