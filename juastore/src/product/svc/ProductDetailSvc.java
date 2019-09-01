@@ -6,34 +6,35 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import dao.ProductDAO;
-import vo.ProductInventoryView;
+import vo.Inventory;
+import vo.Product;
 
-public class ProductListSvc {
+public class ProductDetailSvc {
 
-	public int getProductListCount(String product_code) {
+	public Product getProduct(String product_code) {
 		// TODO Auto-generated method stub
 		Connection con=getConnection();
 		ProductDAO productDAO = ProductDAO.getInstance();
 		productDAO.setConnection(con);
 		
-		int listCount = productDAO.getProductListCount(product_code);
+		Product product = productDAO.selectProduct(product_code);
 		
 		close(con);
 		
-		return listCount;
+		return product;
 	}
 
-	public ArrayList<ProductInventoryView> getProductList(String product_code, int page, int limit) {
+	public ArrayList<Inventory> getInventory(String product_code) {
 		// TODO Auto-generated method stub
 		Connection con=getConnection();
 		ProductDAO productDAO = ProductDAO.getInstance();
 		productDAO.setConnection(con);
 		
-		ArrayList<ProductInventoryView> productList = productDAO.getProductList(product_code, page, limit);
+		ArrayList<Inventory> inventoryList = productDAO.selectInventoryList(product_code);
 		
 		close(con);
 		
-		return productList;
+		return inventoryList;
 	}
-	
+
 }

@@ -11,7 +11,7 @@ import action.Action;
 import product.svc.ProductListSvc;
 import vo.ActionForward;
 import vo.PageInfo;
-import vo.Product;
+import vo.ProductInventoryView;
 
 public class ProductListAction implements Action {
 
@@ -20,13 +20,18 @@ public class ProductListAction implements Action {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		ActionForward forward = null;
-
-		if (!session.getAttribute("id").equals("admin")) {
+		String product_code=null;
+		
+		if(!(request.getParameter("category")==null||request.getParameter("category").equals(""))) {
+			product_code=request.getParameter("category");
+		}
+		System.out.println(product_code);
+		if (session.getAttribute("id")==null||!session.getAttribute("id").equals("admin")) {
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('권한이 없습니다.')");
-			out.println("location.href='/loginForm.mem'");
+			out.println("location.href='/juastore/loginForm.mem'");
 			out.println("</script>");
 		} else {
 
@@ -38,10 +43,9 @@ public class ProductListAction implements Action {
 				page = Integer.parseInt(request.getParameter("page"));
 			}
 			
-			String product_code=request.getParameter("product_code");
 			ProductListSvc productListSvc = new ProductListSvc();
 			int productListCount = productListSvc.getProductListCount(product_code);
-			ArrayList<Product> productList = productListSvc.getProductList(product_code,page,limit);
+			ArrayList<ProductInventoryView> productList = productListSvc.getProductList(product_code,page,limit);
 			
 			int maxPage=(int)((double)productListCount/limit+0.95);
 			int startPage=(((int)((double)page/limitPage+0.9))-1)*limitPage+1;
@@ -58,7 +62,7 @@ public class ProductListAction implements Action {
 			request.setAttribute("pageInfo", pageInfo);
 			request.setAttribute("productList", productList);
 			
-			forward=new ActionForward("/product/prductList.jsp",false);
+			forward=new ActionForward("/product/productList.jsp",false);
 		}
 		return forward;
 	}

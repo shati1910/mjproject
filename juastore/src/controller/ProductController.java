@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
+import product.action.ProductDetailAction;
 import product.action.ProductListAction;
 import vo.ActionForward;
 
@@ -60,6 +61,13 @@ public class ProductController extends HttpServlet {
     	
     	if(command.equals("/productList.pro")) {
     		action = new ProductListAction();
+    		try {
+    			forward=action.execute(request, response);
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}else if(command.equals("/productDetail.pro")) {
+    		action = new ProductDetailAction();
     		try {
     			forward=action.execute(request, response);
     		}catch(Exception e) {
