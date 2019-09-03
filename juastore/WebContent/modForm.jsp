@@ -95,7 +95,6 @@ location.href="loginForm.jsp";
 		<div class="tableButton">
 			<input type="submit" value="수정">
 			<input type="reset" value="다시작성">
-			<a href="deletePro.mem?id=${member.id }"><input type="button" value="탈퇴"></a>
 		</div>
 	</form>
 </div>

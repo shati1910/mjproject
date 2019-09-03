@@ -6,14 +6,14 @@ import static db.JdbcUtil.*;
 import dao.MemberDAO;
 
 public class MemberJoinSVC {
-	public boolean joinMember(Member member) {
+	public boolean joinMember(Member article) {
 		boolean isJoinSuccess=false;
 		Connection con=getConnection();
 		MemberDAO memberDAO = MemberDAO.getInstance();
 		memberDAO.setConnection(con);
 		
 		try {
-			int joinCount = memberDAO.InsertMember(member);
+			int joinCount = memberDAO.InsertMember(article);
 			
 				if(joinCount>0) {
 					commit(con);

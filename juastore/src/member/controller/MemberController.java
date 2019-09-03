@@ -12,7 +12,6 @@ import action.Action;
 import member.action.AddrChangeAction;
 import member.action.LoginAction;
 import member.action.LogoutAction;
-import member.action.MemberDeleteAction;
 import member.action.MemberIdCheckAction;
 import member.action.MemberInfoAction;
 import member.action.MemberJoinProAction;
@@ -136,13 +135,6 @@ public class MemberController extends HttpServlet {
     		}
     	}else if(command.equals("/memInfo.mem")) {
     		action = new MemberInfoAction();
-    		try {
-    			forward = action.execute(request, response);
-    		}catch(Exception e) {
-    			e.printStackTrace();
-    		}
-    	}else if(command.equals("/deletePro.mem")) {
-    		action = new MemberDeleteAction();
     		try {
     			forward = action.execute(request, response);
     		}catch(Exception e) {

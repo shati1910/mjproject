@@ -36,7 +36,6 @@ public class MemberModProAction implements Action {
 			member.setAddress(request.getParameter("address"));
 			member.setPhone(request.getParameter("phone"));
 			
-			System.out.println("modPro session id "+session.getAttribute("id"));
 			MemberModProSVC memberModProSvc = new MemberModProSVC();
 			boolean result = memberModProSvc.modInfo(member);
 			
@@ -48,22 +47,12 @@ public class MemberModProAction implements Action {
 				out.println("history.back()");
 				out.println("</script>");
 			}else {
-				if(session.getAttribute("id").equals("admin")) {
-					response.setContentType("text/html;charset=UTF-8");
-					PrintWriter out = response.getWriter();
-					out.println("<script>");
-					out.println("alert('정보 수정이 완료되었습니다.')");
-					out.println("location.href='memberList.mem'");
-					out.println("</script>");
-				}
-				else{
-					response.setContentType("text/html;charset=UTF-8");
-					PrintWriter out = response.getWriter();
-					out.println("<script>");
-					out.println("alert('정보 수정이 완료되었습니다.')");
-					out.println("location.href='modify.mem'");
-					out.println("</script>");
-				}
+				response.setContentType("text/html;charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('정보 수정이 완료되었습니다.')");
+				out.println("location.href='modify.mem'");
+				out.println("</script>");
 			}
 		}
 		return forward;

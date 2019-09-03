@@ -15,8 +15,6 @@ public class MemberModProSVC {
 		MemberDAO memberDAO = MemberDAO.getInstance();
 		memberDAO.setConnection(con);
 		
-		System.out.println("memberProSVC ¾ÆÀÌµð "+member.getId());
-		
 		boolean result = false;
 		
 		int updateCount = memberDAO.updateMember(member);
