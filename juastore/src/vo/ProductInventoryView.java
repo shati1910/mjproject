@@ -4,6 +4,8 @@ public class ProductInventoryView {
 	private String product_code;
 	private String product_name;
 	private int product_price;
+	private String image;
+	private String etc;
 	private int inventory_amount;
 	
 	public String getProduct_code() {
@@ -23,6 +25,18 @@ public class ProductInventoryView {
 	}
 	public void setProduct_price(int product_price) {
 		this.product_price = product_price;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+	public String getEtc() {
+		return etc;
+	}
+	public void setEtc(String etc) {
+		this.etc = etc;
 	}
 	public int getInventory_amount() {
 		return inventory_amount;

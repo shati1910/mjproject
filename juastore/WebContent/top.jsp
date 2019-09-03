@@ -42,7 +42,7 @@
 </head>
 <body>
 <section id="header">
-	<a href="main.jsp"><img src="/juastore/images/logo.jpg" height="250" alt="메인으로" ></a>
+	<a href="/juastore/main.jsp"><img src="/juastore/images/logo.jpg" height="250" alt="메인으로" ></a>
 </section>
 <section id="menu">
 <%String id=(String)session.getAttribute("id");

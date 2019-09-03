@@ -25,7 +25,6 @@ public class ProductListAction implements Action {
 		if(!(request.getParameter("category")==null||request.getParameter("category").equals(""))) {
 			product_code=request.getParameter("category");
 		}
-		System.out.println(product_code);
 		if (session.getAttribute("id")==null||!session.getAttribute("id").equals("admin")) {
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();

@@ -68,8 +68,10 @@ td {
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
-
 	</table>
+	
+	<a href="/juastore/productAddForm.pro">상품등록</a>
+	
 	<section class="pageList">
 		<c:choose>
 			<c:when test="${pageInfo.page<=1 }">
