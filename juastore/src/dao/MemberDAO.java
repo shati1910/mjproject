@@ -32,20 +32,20 @@ public class MemberDAO {
 	}
 
 	//회원가입
-	public int InsertMember(Member article) {
+	public int InsertMember(Member member) {
 		PreparedStatement pstmt=null;
 		String sql="insert into member Values (?,?,?,?,?,?,?,now())";
 		int insertCount=0;
 		
 		try {
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1,article.getId());
-			pstmt.setString(2,article.getPassword());
-			pstmt.setString(3,article.getName());
-			pstmt.setString(4,article.getEmail());
-			pstmt.setInt(5,article.getZip_code());
-			pstmt.setString(6, article.getAddress());
-			pstmt.setString(7,article.getPhone());
+			pstmt.setString(1,member.getId());
+			pstmt.setString(2,member.getPassword());
+			pstmt.setString(3,member.getName());
+			pstmt.setString(4,member.getEmail());
+			pstmt.setInt(5,member.getZip_code());
+			pstmt.setString(6, member.getAddress());
+			pstmt.setString(7,member.getPhone());
 			
 			insertCount = pstmt.executeUpdate();
 		}catch(Exception ex) {
@@ -107,7 +107,9 @@ public class MemberDAO {
 		PreparedStatement pstmt = null;
 		int result=0;
 		String update_sql = "update member set password=?,name=?,email=?,zip_code=?,address=?,phone=?"
-				+ "where id=?";
+				+ " where id=?";
+		System.out.println("memberDAO updateMember 아이디 "+ member.getId());
+		System.out.println("memberDAO 비밀번호"+member.getPassword());
 		
 		try {
 			pstmt = con.prepareStatement(update_sql);
@@ -175,15 +177,25 @@ public class MemberDAO {
 		ResultSet rs = null;
 		PreparedStatement pstmt2 = null;
 		ResultSet rs2 = null;
+		
+		String memlist_sql=null;
+		
+		if(search==null ||search.equals("idlist")) {
+			memlist_sql = "select * from member order by id limit ?,10";
+			System.out.println(memlist_sql);
+		}else if(search.equals("joinlist")) {
+			memlist_sql = "select * from member order by join_date limit ?,10";
+		}else if(search.equals("paylist")) {
+			memlist_sql = "select member.id,member.join_date,accumpay from member "
+					+ "left join memlist on member.id = memlist.id order by accumpay desc limit ?,10"; 
+		}
 
-		String memlist_sql ="select * from member order by id limit ?,10";
 		System.out.println("search값 테스트"+search);
 		ArrayList<Member> memlist = new ArrayList<Member>();
 		Member member = null;
 		int startrow=(page-1)*10;
 		
-		try {
-	
+		try {			
 			pstmt = con.prepareStatement(memlist_sql);
 			pstmt.setInt(1, startrow);
 			rs=pstmt.executeQuery();
@@ -234,6 +246,24 @@ public class MemberDAO {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public int deleteMember(Member member, String del_id) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = null;
+		String member_delete_sql = "delete from member where id=?";
+		int deleteCount = 0;
+
+		try {
+			pstmt = con.prepareStatement(member_delete_sql);
+			pstmt.setString(1, del_id);
+			deleteCount = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			System.out.println("deleteMember오류 : "+e );
+		}finally {
+			close(pstmt);
+		}
+		return deleteCount;
 	}
 
 }

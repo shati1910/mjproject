@@ -54,30 +54,30 @@ location.href="loginForm.jsp";
 
 <div id="total">
 	<h1>정보수정</h1>
-	<form action="modPro.mem" name="modForm" method="post">
+	<form action="modPro.mem?id=${member.id }" name="modForm" method="post">
 		<table id="modify">
 			<tr>
 				<th class="title">아이디</th>
 				<td class="content">${member.id }
-				<input type="hidden" value="아이디값넘겨주기" id="user_id" name="user_id"></td>
+				<input type="hidden" value="${member.id }" id="id" name="id"></td>
 			</tr>
 			<tr>
 				<th class="title">비밀번호 변경</th>
 				<td class="content_zip">
-					<input type="text" value="${member.password }" id="user_pass" name="user_pass">
+					<input type="text" value="${member.password }" id="password" name="password">
 				</td>
 			</tr>
 			<tr>
 				<th class="title">이름</th>
-				<td class="content"><input type="text" value="${member.name }" id="user_name" name="user_name"></td>
+				<td class="content"><input type="text" value="${member.name }" id="name" name="name"></td>
 			</tr>
 			<tr>
 				<th class="title">연락처</th>
-				<td class="content"><input type="text" value="${member.phone }" id="user_phone" name="user_phone"></td>
+				<td class="content"><input type="text" value="${member.phone }" id="phone" name="phone"></td>
 			</tr>
 			<tr>
 				<th class="title">이메일</th>
-				<td class="content"><input type="text" value="${member.email }" id="user_email" name="user_email"></td>
+				<td class="content"><input type="text" value="${member.email }" id="email" name="email"></td>
 			</tr>
 			
 			<tr>
@@ -85,7 +85,7 @@ location.href="loginForm.jsp";
 				<td class="content_zip">
 				(우편번호)<input type="text" value="${member.zip_code }" readonly size="5" id="zip_code" name="zip_code"><br>
 				(주소)<input type="text" value="${member.address }" readonly size="50" id="address" name="address"><br>
-				<a href="addrChange.jsp"><input type="button" value="주소 변경"></a>
+				<a href="addrChange.jsp?id=${member.id }"><input type="button" value="주소 변경"></a>
 				</td>
 			</tr>
 			<tr>
@@ -97,7 +97,7 @@ location.href="loginForm.jsp";
 		<p>
 			<input type="submit" value="수정">
 			<input type="reset" value="다시작성">
-			<input type="button" value="탈퇴">
+			<a href="deletePro.mem?id=${member.id }"><input type="button" value="탈퇴"></a>
 		</div>
 	</form>
 </div>
