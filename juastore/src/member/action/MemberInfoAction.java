@@ -16,34 +16,27 @@ public class MemberInfoAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("UTF-8");
 		ActionForward forward = null;
-		
 		HttpSession session = request.getSession();
-		
-		if(session.getAttribute("id")==null || (!((String)session.getAttribute("id")).equals("admin"))) {
-			if(!((String)session.getAttribute("id")).equals(request.getParameter("id"))) {
+
+		if(session.getAttribute("id")==null || !((String)session.getAttribute("id")).equals("admin")) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('로그인을 해주세요.')");
-			out.println("location.href='loginForm.log';");
+			out.println("alert('관리자로 로그인하세요.')");
+			out.println("location.href='loginForm.mem'");
 			out.println("</script>");
-			}
+		}else {
+			String user_id = request.getParameter("user_id");
+
+			MemberInfoSVC memberInfoSVC = new MemberInfoSVC();
+			Member member = memberInfoSVC.getMember(user_id);
+			request.setAttribute("member", member);
+			forward = new ActionForward();
+			forward.setPath("memberListInfo.jsp?id="+user_id);
 		}
-		
-		String info_id =request.getParameter("id");
-			
-		MemberInfoSVC memberInfoSvc = new MemberInfoSVC();
-		Member member = memberInfoSvc.getMember(info_id);
-			
-		request.setAttribute("member", member);
-		System.out.println(member.getPassword());
-		forward = new ActionForward();
-		forward.setPath("info.jsp");
-		System.out.println(member.getId());
-		
 		
 		return forward;
 	}
-
 }

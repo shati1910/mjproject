@@ -62,7 +62,10 @@ public class MemberDAO {
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
+		PreparedStatement pstmt2 = null;
+		ResultSet rs2 = null;
 		String sql="select * from member where id=?";
+		String sql2 = "select * from memlist where id=?";
 		Member loginMember=null;
 		
 		try {
@@ -79,12 +82,21 @@ public class MemberDAO {
 				loginMember.setZip_code(rs.getInt("zip_code"));
 				loginMember.setAddress(rs.getString("address"));
 				loginMember.setPhone(rs.getString("phone"));
+				
+				pstmt2 = con.prepareStatement(sql2);
+				pstmt2.setString(1, rs.getString("id"));
+				rs2 = pstmt2.executeQuery();
+				if(rs2.next()) {
+					loginMember.setPaysum(rs2.getInt("accumpay"));
+				}
 			}
 		}catch(SQLException e) {
 			System.out.println("SelectMember ï¿½ï¿½ï¿½ï¿½ : " + e);
 		}finally {
 			close(rs);
 			close(pstmt);
+			close(rs2);
+			close(pstmt2);
 		}
 		
 		return loginMember;
@@ -155,26 +167,35 @@ public class MemberDAO {
 		}
 		return listCount;
 	}
-
-	public ArrayList<Member> SelectMemList(int page, int limit) {
+	
+	public ArrayList<Member> SelectMemList(int page, int limit, String search) {
 		// TODO Auto-generated method stub
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String memlist_sql = "select * from member order by id asc limit ?,10";
+
+		String memlist_sql = null;
+		
+			memlist_sql ="select * from memberlist_view order by "+search+" limit ?,10";
+		
+		System.out.println("search°ª Å×½ºÆ®"+search);
 		ArrayList<Member> memlist = new ArrayList<Member>();
 		Member member = null;
 		int startrow=(page-1)*10;
 		
 		try {
+	
 			pstmt = con.prepareStatement(memlist_sql);
 			pstmt.setInt(1, startrow);
 			rs=pstmt.executeQuery();
-			
+
+
 			while(rs.next()) {
 				member = new Member();
 				member.setId(rs.getString("id"));
 				member.setJoin_date(rs.getDate("join_date"));
+				member.setPaysum(rs.getInt("accumpay"));
+
 				memlist.add(member);
 			}
 		}catch(Exception e) {
@@ -182,6 +203,7 @@ public class MemberDAO {
 		}finally {
 			close(rs);
 			close(pstmt);
+
 		}
 		return memlist;
 	}
@@ -260,6 +282,63 @@ public class MemberDAO {
 		
 		
 		return pass;
+	}
+
+	public int selectFindListCount(String findId) {
+		// TODO Auto-generated method stub
+		int findListCount=0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pstmt = con.prepareStatement("select count(*) from memberlist_view where id like '%"+findId+"%'");
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				findListCount = rs.getInt(1);
+			}
+		}catch(Exception e) {
+			System.out.println("getFindListCount ¿À·ù:"+e);
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return findListCount;
+	}
+
+	public ArrayList<Member> SelectFindMemList(int page, int limit, String findId) {
+		// TODO Auto-generated method stub
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String findlist_sql="select * from memberlist_view where id like '%"+findId+"%' limit ?,10";
+		System.out.println("findId°ª "+findId);
+		ArrayList<Member> memlist = new ArrayList<Member>();
+		Member member = null;
+		int startrow=(page-1)*10;
+		
+		try {
+
+			pstmt = con.prepareStatement(findlist_sql);
+			pstmt.setInt(1, startrow);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				member = new Member();
+				member.setId(rs.getString("id"));
+				member.setJoin_date(rs.getDate("join_date"));
+				member.setPaysum(rs.getInt("accumpay"));
+
+					memlist.add(member);
+			}
+		}catch(Exception e) {
+			System.out.println("getFindMember ¿À·ù : "+e);
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return memlist;
 	}
 
 }
