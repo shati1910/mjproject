@@ -10,16 +10,16 @@
 </head>
 <script>
 	function backDetail(){
-		location.href="/juastore/productDetail.pro?product_code=${product_code}";
+		location.href="/juastore/productDetail.pro?product_code=${param.product_code}";
 	}
 </script>
 <body>
-	<form action="/inventoryInOut.pro">
-	<input type="hidden" id="product_code" name="product_code" value="${product_code }" >
+	<form action="/juastore/inventoryInOut.pro">
+	<input type="hidden" id="product_code" name="product_code" value="${param.product_code }" >
 		<table>
 			<thead>
 				<tr>
-					<td colspan="2">${product_code }입/출고</td>
+					<td colspan="2">${param.product_code } &nbsp;입/출고</td>
 				</tr>
 			</thead>
 			<tr>
@@ -33,7 +33,7 @@
 			</tr>
 			<tr>
 				<th>수량</th>
-				<td><input type="text" name="amount" id="amount" size="3">10</td>
+				<td><input type="text" name="amount" id="amount" size="3" value="10"></td>
 			</tr>
 			<tr>
 				<td colspan="2">

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import vo.Inventory;
+import vo.Product;
 import vo.ProductInventoryView;
 
 import static db.JdbcUtil.*;
@@ -213,11 +214,11 @@ public class ProductDAO {
 		
 		return add;
 	}
-	public int insertAddInventory(String product_code, int inventory_amount) {
+	public int insertInventory(String product_code, int inventory_amount, String state) {
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		String sql="insert into inventory value(?,?,now(),?,'in')";
+		String sql="insert into inventory value(?,?,now(),?,?)";
 		int add=0;
 		int inventory_num=0;
 		
@@ -232,6 +233,7 @@ public class ProductDAO {
 			pstmt.setInt(1,inventory_num);
 			pstmt.setString(2, product_code);
 			pstmt.setInt(3, inventory_amount);
+			pstmt.setString(4, state);
 			
 			add=pstmt.executeUpdate();
 		}catch(Exception e) {
@@ -241,36 +243,5 @@ public class ProductDAO {
 			close(pstmt);
 		}
 		return add;
-	}
-	public int insertSubInventory(String product_code, int inventory_amount) {
-		// TODO Auto-generated method stub
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		String sql="insert into inventory value(?,?,now(),?,'out')";
-		int sub=0;
-		int inventory_num=0;
-		
-		try {
-			pstmt=con.prepareStatement("select max(inventory_num) from inventory");
-			rs=pstmt.executeQuery();
-			
-			if(rs.next())
-				inventory_num=rs.getInt(1)+1;
-			
-			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1,inventory_num);
-			pstmt.setString(2, product_code);
-			pstmt.setInt(3, inventory_amount);
-			
-			sub=pstmt.executeUpdate();
-		}catch(Exception e) {
-			System.out.println("insertInventory에러: "+e);
-		}finally {
-			close(rs);
-			close(pstmt);
-		}
-		
-		return sub;
-	}
-	
+	}	
 }

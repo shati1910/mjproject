@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
+import product.action.InventoryInOutAction;
 import product.action.InventoryInOutFormAction;
 import product.action.ProductAddAction;
 import product.action.ProductAddFormAction;
@@ -92,6 +93,13 @@ public class ProductController extends HttpServlet {
     		}
     	}else if(command.equals("/inventoryInOutForm.pro")) {
     		action = new InventoryInOutFormAction();
+    		try {
+    			forward=action.execute(request, response);
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}else if(command.equals("/inventoryInOut.pro")) {
+    		action = new InventoryInOutAction();
     		try {
     			forward=action.execute(request, response);
     		}catch(Exception e) {

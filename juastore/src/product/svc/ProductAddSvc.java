@@ -35,8 +35,8 @@ public class ProductAddSvc {
 		productDAO.setConnection(con);
 		boolean isSuccess=false;
 		
-		int add = productDAO.insertAddInventory(product_code,inventory_amount);
-		int sub = productDAO.insertSubInventory(product_code,0);
+		int add = productDAO.insertInventory(product_code,inventory_amount,"in");
+		int sub = productDAO.insertInventory(product_code,0,"out");
 		
 		if(add>0 && sub>0) {
 			isSuccess=true;

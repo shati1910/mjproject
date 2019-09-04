@@ -26,7 +26,7 @@ public class ProductAddAction implements Action {
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('권한이 없습니다.')");
-			out.println("location.href='/loginForm.mem'");
+			out.println("history.back()");
 			out.println("</script>");
 		}
 		
