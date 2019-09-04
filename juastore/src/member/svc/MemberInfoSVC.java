@@ -1,7 +1,9 @@
 package member.svc;
 
-import java.sql.Connection;
 import static db.JdbcUtil.*;
+
+import java.sql.Connection;
+
 import dao.MemberDAO;
 import vo.Member;
 
@@ -19,5 +21,4 @@ public class MemberInfoSVC {
 		
 		return member;
 	}
-
 }
