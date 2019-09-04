@@ -18,13 +18,14 @@ a{
 	padding-top:30px;
 	padding-bottom:30px;
 	margin-left:30%;
+	margin-top:20px;
 	text-align:center;
 }
 .logimage{
 	margin-left:42%;
 	margin-top:50px;
 }
-table{
+.logtable {
 	padding-top:30px;
 	padding-left:80px;
 	text-align:center;
@@ -39,7 +40,7 @@ table{
 <jsp:include page="top.jsp"/>
 <section id="log">
 <form name="loginform" action="login.mem" method="post">
-<table>
+<table class="logtable">
 	<tr>
 		<td>
 			<label for="id">아이디</label>
@@ -59,13 +60,13 @@ table{
 	<tr>
 		<td colspan="2">
 			<div class="tableButton">
+			<p>
 				<input type="submit" value="로그인">
 				<input type="reset" value="다시작성">
 			</div>
 		</td>
 	</tr>
 </table>
-<br>
 <a href="#">id/password찾기</a>&nbsp;&nbsp;
 
 </form>

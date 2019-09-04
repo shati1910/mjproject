@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-  
-<jsp:include page="/top.jsp" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<jsp:include page="top.jsp"/>
 <style>
-.total {
+#total {
 	margin: auto;
 	width: 80%;
 }
@@ -22,79 +21,83 @@
 	font-size: 1.3em;
 	margin: auto;
 }
-#content {
+.content {
 	border: 1px solid #ddd;
 	padding: 5px;
 }
 
-#content_zip{
+.content_zip{
 	border: 1px solid #ddd;
 	padding: 5px;
 	font-size:0.7em;
 }
 
-#title {
+.title {
 	border: 1px solid #ddd;
 	background: #eee;
 	color: #A16C29;
 	text-align: left;
 }
 </style>
-<%
-if(session.getAttribute("id")==null){
+<%-- <%
+if(session.getAttribute("id") != "admin"){
 %>
 <script>
-alert('로그인을 하세요');
+alert('관리자로 로그인 하세요');
 location.href="loginForm.jsp";
 </script>
 <%
 }
-%>  
+%>   --%>
 </head>
 <body>
 
-<div class="total">
+<div id="total">
 	<h1>정보수정</h1>
 	<form action="modPro.mem" name="modForm" method="post">
 		<table id="modify">
 			<tr>
-				<th id="title">아이디</th>
-				<td id="content">${sessionScope.id }
-				<input type="hidden" value="${sessionScope.id }" id="id" name="id"></td>
+				<th class="title">아이디</th>
+				<td class="content">${member.id }
+				<input type="hidden" value="아이디값넘겨주기" id="user_id" name="user_id"></td>
 			</tr>
 			<tr>
-				<th id="title">비밀번호 변경</th>
-				<td id="content_zip">
-					안전을 위해 3개월에 한번 비밀번호 변경을 추천드립니다. &nbsp;&nbsp;
-					<a href="pass_change.jsp"><input type="button" value="비밀번호 변경하기"></a>
-					<input type="hidden" value="${member.password }" id="password" name="password">
+				<th class="title">비밀번호 변경</th>
+				<td class="content_zip">
+					<input type="text" value="${member.password }" id="user_pass" name="user_pass">
 				</td>
 			</tr>
 			<tr>
-				<th id="title">이름</th>
-				<td id="content"><input type="text" value="${member.name }" id="name" name="name"></td>
+				<th class="title">이름</th>
+				<td class="content"><input type="text" value="${member.name }" id="user_name" name="user_name"></td>
 			</tr>
 			<tr>
-				<th id="title">연락처</th>
-				<td id="content"><input type="text" value="${member.phone }" id="phone" name="phone"></td>
+				<th class="title">연락처</th>
+				<td class="content"><input type="text" value="${member.phone }" id="user_phone" name="user_phone"></td>
 			</tr>
 			<tr>
-				<th id="title">이메일</th>
-				<td id="content"><input type="text" value="${member.email }" id="email" name="email"></td>
+				<th class="title">이메일</th>
+				<td class="content"><input type="text" value="${member.email }" id="user_email" name="user_email"></td>
 			</tr>
 			
 			<tr>
-				<th id="title">주소</th>
-				<td id="content_zip">
+				<th class="title">주소</th>
+				<td class="content_zip">
 				(우편번호)<input type="text" value="${member.zip_code }" readonly size="5" id="zip_code" name="zip_code"><br>
 				(주소)<input type="text" value="${member.address }" readonly size="50" id="address" name="address"><br>
-				<a href="addrChange.jsp?id=${sessionScope.id }"><input type="button" value="주소 변경"></a>
+				<a href="addrChange.jsp?id=${member.id }"><input type="button" value="주소 변경"></a>
 				</td>
+			</tr>
+			<tr>
+				<th class="title">누적 구매금액</th>
+				<td class="content">${member.paysum } 원</td>
 			</tr>
 		</table>
 		<div class="tableButton">
+		<p>
 			<input type="submit" value="수정">
 			<input type="reset" value="다시작성">
+			<input type="button" value="탈퇴">
 		</div>
 	</form>
 </div>

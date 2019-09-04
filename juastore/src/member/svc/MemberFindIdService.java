@@ -1,35 +1,40 @@
 package member.svc;
 
+import static db.JdbcUtil.close;
+import static db.JdbcUtil.getConnection;
+
+import java.sql.Connection;
 import java.util.ArrayList;
 
-import static db.JdbcUtil.*;
 import dao.MemberDAO;
 import vo.Member;
-import java.sql.Connection;
 
-public class MemberListService {
+public class MemberFindIdService {
 
-	public int getListCount() {
+	public int getFindListCount(String findId) {
 		// TODO Auto-generated method stub
-		int listCount = 0;
+		int findListCount = 0;
 		Connection con = getConnection();
 		MemberDAO memberDAO = MemberDAO.getInstance();
 		memberDAO.setConnection(con);
-		listCount = memberDAO.selectListCount();
+		findListCount = memberDAO.selectFindListCount(findId);
 		close(con);
-		return listCount;
+		return findListCount;
 	}
 
-	public ArrayList<Member> getmemList(int page, int limit, String search) {
+	public ArrayList<Member> getmemList(int page, int limit, String findId) {
 		// TODO Auto-generated method stub
-
+		
+		System.out.println(findId);
 		ArrayList<Member> memlist = null;
 		Connection con = getConnection();
 		MemberDAO memberDAO = MemberDAO.getInstance();
 		memberDAO.setConnection(con);
-		memlist = memberDAO.SelectMemList(page,limit,search);
+		memlist = memberDAO.SelectFindMemList(page,limit,findId);
 		close(con);
 		return memlist;
 	}
+
+	
 
 }
