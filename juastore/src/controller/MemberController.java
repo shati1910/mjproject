@@ -1,4 +1,3 @@
-
 package controller;
 
 import java.io.IOException;
@@ -11,10 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
 import member.action.AddrChangeAction;
-import member.action.FindIdAction;
-import member.action.FindPassAction;
 import member.action.LoginAction;
 import member.action.LogoutAction;
+import member.action.MemberFindIdAction;
 import member.action.MemberIdCheckAction;
 import member.action.MemberInfoAction;
 import member.action.MemberJoinProAction;
@@ -66,10 +64,6 @@ public class MemberController extends HttpServlet {
 	    	
 	   	ActionForward forward=null;
 	   	Action action = null;
-	   	
-	   	System.out.println(RequestURI);
-    	System.out.println(contextPath);
-    	System.out.println(command);
 
     	if(command.equals("/joinForm.mem")) {
     		forward=new ActionForward();
@@ -103,13 +97,6 @@ public class MemberController extends HttpServlet {
     		try {
     			forward = action.execute(request, response);
     		}catch(Exception e){
-    			e.printStackTrace();
-    		}
-    	}else if(command.equals("/memberInfo.mem")) {
-    		action = new MemberInfoAction();
-    		try {
-    			forward=action.execute(request, response);
-    		}catch(Exception e) {
     			e.printStackTrace();
     		}
     	}else if(command.equals("/modify.mem")) {
@@ -147,15 +134,15 @@ public class MemberController extends HttpServlet {
     		}catch(Exception e) {
     			e.printStackTrace();
     		}
-    	}else if(command.equals("/findId.mem")) {
-    		action = new FindIdAction();
+    	}else if(command.equals("/memInfo.mem")) {
+    		action = new MemberInfoAction();
     		try {
     			forward = action.execute(request, response);
     		}catch(Exception e) {
     			e.printStackTrace();
     		}
-    	}else if(command.equals("/findPass.mem")) {
-    		action = new FindPassAction();
+    	}else if(command.equals("/findMember.mem")) {
+    		action = new MemberFindIdAction();
     		try {
     			forward = action.execute(request, response);
     		}catch(Exception e) {
@@ -177,3 +164,4 @@ public class MemberController extends HttpServlet {
     	}
 	}
 }
+

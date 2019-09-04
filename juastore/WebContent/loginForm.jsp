@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-a {
-	text-decoration: none;
+a{
+	text-decoration:none;
 }
-
 #log{
 	width:400px;
 	height:200px;
@@ -22,26 +21,22 @@ a {
 	margin-top:20px;
 	text-align:center;
 }
-
-.logimage {
-	margin-left: 42%;
-	margin-top: 50px;
+.logimage{
+	margin-left:42%;
+	margin-top:50px;
 }
-
 .logtable {
 	padding-top:30px;
 	padding-left:80px;
 	text-align:center;
 }
-
-.tableButton {
+.tableButton{
 	margin: auto;
 	width: 75%;
 }
 </style>
 </head>
 <body>
-
 <jsp:include page="top.jsp"/>
 <section id="log">
 <form name="loginform" action="login.mem" method="post">
@@ -72,11 +67,11 @@ a {
 		</td>
 	</tr>
 </table>
-<a href="/juastore/member/findId.jsp">id/password찾기</a>&nbsp;&nbsp;
+<a href="#">id/password찾기</a>&nbsp;&nbsp;
 
-		</form>
-	</section>
-	<jsp:include page="side.jsp" />
-	<jsp:include page="bottom.jsp" />
+</form>
+</section>
+<jsp:include page="side.jsp"/>
+<jsp:include page="bottom.jsp"/>
 </body>
 </html>
